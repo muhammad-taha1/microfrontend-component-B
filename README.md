@@ -15,7 +15,7 @@ Bear in mind that the root component of the project will be transformed to an an
   export class AppModule {
     constructor(private injector: Injector) {
       const el = createCustomElement(AppComponent, { injector: this.injector });
-      customElements.define('element-a', el);
+      customElements.define('element-b', el);
     }
 
     ngDoBootstrap() {
@@ -37,7 +37,9 @@ Bear in mind that the root component of the project will be transformed to an an
 ```
 "outputPath": "dist"
 ```
-
+8. Keep in mind that the root component's selector will not work in index.html. Use the element's definition name 
+from app.module file. In this case the template selector to use:
+`<element-B></element-B>`
 8. Run `ng serve` to locally serve the project, or run `npm run build:elements` to create this element's js file
 
 
