@@ -22,21 +22,23 @@ Bear in mind that the root component of the project will be transformed to an an
     }
   }
   ```
-4. Now create build process to transform this element into a single js file. In project's root, create a new <b>element-build.js</b> file, and add steps to package the project in a single js file. Refer to this project's element-build.js: (./element-build.js)
+4. In app.module, remove bootstrap from @NgModule and add: `entryComponents: [AppComponent]`
 
-5. Now create custom build script in package.json:
+5. Now create build process to transform this element into a single js file. In project's root, create a new <b>element-build.js</b> file, and add steps to package the project in a single js file. Refer to this project's [element-build.js](./element-build.js)
+
+6. Now create custom build script in package.json:
 
 ```
     "build:elements": "ng build --prod --output-hashing none && node element-build.js"
 
 ```
 
-6. Now go to angular.json and remove project's name from output path; the output path should now be:
+7. Now go to angular.json and remove project's name from output path; the output path should now be:
 ```
 "outputPath": "dist"
 ```
 
-7. Run `ng serve` to locally serve the project, or run `npm run build:elements` to create this element's js file
+8. Run `ng serve` to locally serve the project, or run `npm run build:elements` to create this element's js file
 
 
 ## Development server
