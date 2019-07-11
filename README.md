@@ -9,7 +9,11 @@ Bear in mind that the root component of the project will be transformed to an an
 ## Steps for creating Angular element (web component) for microfrontend
 
 1. Create a new Angular project with `ng new <project-name>`
-2. Now add Angular element dependency: `npm i @angular/elements`
+2. Now add the following dependencies:
+ ```
+ npm i @angular/elements
+ npm i concat
+ ```
 3. Next go to app.module and define your element in the constructor and add ngDoBootStrap function:
   ```
   export class AppModule {
@@ -25,6 +29,7 @@ Bear in mind that the root component of the project will be transformed to an an
 4. In app.module, remove bootstrap from @NgModule and add: `entryComponents: [AppComponent]`
 
 5. Now create build process to transform this element into a single js file. In project's root, create a new <b>element-build.js</b> file, and add steps to package the project in a single js file. Refer to this project's [element-build.js](./element-build.js)
+Note that the contents of the file have to modified based on what compiled scripts are for this project.
 
 6. Now create custom build script in package.json:
 
