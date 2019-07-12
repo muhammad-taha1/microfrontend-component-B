@@ -13,6 +13,7 @@ Bear in mind that the root component of the project will be transformed to an an
  ```
  npm i @angular/elements
  npm i concat
+ npm i -D @angular-builders/custom-webpack
  ```
 3. Next go to app.module and define your element in the constructor and add ngDoBootStrap function:
   ```
@@ -37,15 +38,43 @@ Note that the contents of the file have to modified based on what compiled scrip
     "build:elements": "ng build --prod --output-hashing none && node element-build.js"
 
 ```
+7. Now create a new file in project's root and name it webpack.extra.js. This will contain webpack custom configurations. Add the following in this file:
+```
+module.exports = {
+  output: {
+    jsonpFunction: 'webpackJsonpElementB',
+    library: 'elementb'
+  }
+}
+```
+<b>Note:</b> Values for jsonpFunction and library in this config file should be unique throughout a microfrontend project. Name them carefully.
 
-7. Now go to angular.json and remove project's name from output path; the output path should now be:
+8. Now go to angular.json and modify the build process to use webpack:
+```
+"architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser",
+          "options": {
+```
+within the build options, add custom webpack config. The path parameter should match with webpack config file created in previous step:
+```
+"options": {
+  .
+  .
+  .
+           "customWebpackConfig" : {"path":"webpack.extra.js",
+            "mergeStrategies": {"externals":"replace"}}
+}
+```
+Now change the output path of this build folder and remove project's name from it. The output path should now be:
 ```
 "outputPath": "dist"
 ```
-8. Keep in mind that the root component's selector will not work in index.html. Use the element's definition name 
+9. Keep in mind that the root component's selector will not work in index.html. Use the element's definition name 
 from app.module file. In this case the template selector to use:
-`<element-B></element-B>`
-8. Run `ng serve` to locally serve the project, or run `npm run build:elements` to create this element's js file
+`<element-b></element-b>`
+
+10. Run `ng serve` to locally serve the project, or run `npm run build:elements` to create this element's js file
 
 
 ## Development server
